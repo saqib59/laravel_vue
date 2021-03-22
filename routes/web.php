@@ -29,8 +29,15 @@ Route::get('app/get_tags',[App\Http\Controllers\AdminController::class, 'getTags
 Route::post('app/edit_tag',[App\Http\Controllers\AdminController::class, 'editTag']);
 Route::post('app/delete_tag',[App\Http\Controllers\AdminController::class, 'deleteTag']);
 
+
 /*category routes*/
 Route::post('app/upload',[App\Http\Controllers\AdminController::class, 'upload']);
+Route::post('app/delete_image',[App\Http\Controllers\AdminController::class, 'deleteImage']);
+Route::post('app/create_category',[App\Http\Controllers\AdminController::class, 'createCategory']);
+Route::get('app/get_categories',[App\Http\Controllers\AdminController::class, 'getCategories']);
+Route::post('app/edit_category',[App\Http\Controllers\AdminController::class, 'editCategory']);
+Route::post('app/delete_category',[App\Http\Controllers\AdminController::class, 'deleteCategory']);
+
 
 Route::get('/', function () {
     return view('welcome');

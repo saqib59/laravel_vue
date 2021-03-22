@@ -21,24 +21,24 @@ export default{
                     desc: desc
                 });
             },
-            success (desc,title="Great") {
-                this.$Notice.success({
-                     title: title,
-                    desc: desc
-                });
-            },
-            warning (desc,title="hey") {
-                this.$Notice.warning({
-                     title: title,
-                    desc: desc
-                });
-            },
-            error (desc="Something went wrong",title="Oops") {
-                this.$Notice.error({
+        success (desc,title="Great") {
+            this.$Notice.success({
                     title: title,
-                    desc: desc
-                });
-            }
+                desc: desc
+            });
+        },
+        warning (desc,title="Oops!") {
+            this.$Notice.warning({
+                    title: title,
+                desc: desc
+            });
+        },
+        error (desc="Something went wrong",title="Oops") {
+            this.$Notice.error({
+                title: title,
+                desc: desc
+            });
+        }
 	},
 			
 }
