@@ -5,8 +5,9 @@ import hooks from './pages/basic/hooks'
 import methods from './pages/basic/methods'
 		/*project routes*/
 import home from './pages/home'
-import tags from '../admin/components/pages/tags'
-import category from '../admin/components/pages/category'
+import tags from '../admin/pages/tags'
+import category from '../admin/pages/category'
+import adminusers from '../admin/pages/adminusers'
 Vue.use(Router);
 
 const routes = [
@@ -22,6 +23,10 @@ const routes = [
 	{
 		path: '/category',
 		component: category
+	},
+	{
+		path: '/adminusers',
+		component: adminusers
 	},
 	// /*hooks*/
 	// {

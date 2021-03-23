@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Tags;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -53,12 +54,14 @@ class AdminController extends Controller
     }
     public function deleteImage(Request $request){
         $picName = $request->imageName;
-        $this->deleteFileFromServer($picName);
+        $this->deleteFileFromServer($picName, false);
        
         return 'done';
     }
-    public function deleteFileFromServer($picName){
-        $picPath = public_path().'/uploads/'.$picName;
+    public function deleteFileFromServer($picName, $hasFullPath = false){
+        if (!$hasFullPath) {
+            $picPath = public_path().'/uploads/'.$picName;
+        }
         if (file_exists($picPath)) {
             @unlink($picPath);
         }
@@ -95,10 +98,54 @@ class AdminController extends Controller
     }
     /* delete category */
     public function deleteCategory(Request $request){
+        /* first delete the file from the server */
+        $this->deleteFileFromServer($request->IconName);
         $this->validate($request,[
             'id'   => 'required',
         ]);
         return Category::where('id', $request->id)->delete();
     }
+        /* USER CONTROLLERS */
+
+    public function createUser(Request $request){
+        $this->validate($request,[
+            'fullName'   => 'required',
+            'email'   => 'required|email|unique:users',
+            'autopassword'   => 'required',
+            'userRole'   => 'required'
+        ]);
+        $password = bcrypt($request->autopassword);
+        return User::create([
+            'fullname' => $request->fullName,
+            'email'     => $request->email,
+            'userRole'     => $request->userRole,
+            'password'     => $password,
+        ]);
+    }
+     /*get users*/
+    public function getUsers(Request $request){
+    	return response()->json([
+            "users"=> User::orderBy('id','desc')->get()
+    	],200);
+    }
+    /* edit user */
+    public function editUser(Request $request){
+        $this->validate($request,[
+            'fullName'   => 'required',
+            'email'   => "required|email|unique:users,email, $request->id" ,
+            'userRole'   => 'required'
+        ]);
+         $data = [
+            'fullname' => $request->fullName,
+            'email'     => $request->email,
+            'userRole'     => $request->userRole,
+        ];
+        if ($request->password) {
+            $password = bcrypt($request->autopassword);
+            $data['password'] = $password;
+        }
+        return User::where('id', $request->id)->update($data);
+    }
+    
 }
  

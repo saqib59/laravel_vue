@@ -111,28 +111,16 @@
 				    </Modal>
 
 				    <!-- DELETE MODAL -->
-				     <Modal
-				      v-model="deleteModal" 
-				      width="360"
-				      >
-			        <p slot="header" style="color:#f60;text-align:center">
-			            <Icon type="ios-information-circle"></Icon>
-			            <span>Delete confirmation</span>
-			        </p>
-			        <div style="text-align:center">
-			            <p>Are you sure you want to delete this category?</p>
-			        </div>
-			        <div slot="footer">
-			            <Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteCategory">Delete</Button>
-			        </div>
-   					 </Modal>
-
+					<deleteModal></deleteModal>
+				  
 			</div>
 		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
+import { mapGetters } from 'vuex';
+import deleteModal from "../components/deleteModal.vue";
 export default{
 	data(){
 		return{
@@ -210,21 +198,21 @@ export default{
 			this.index = index;
 			this.isEditingItem = true;
 		},
-		async deleteCategory(){	
-			this.isDeleting = true;
-			const res = await this.callApi('post','app/delete_category', this.deleteItem);
-			if (res.status == 200) {
-					this.categories.splice(this.deletingIndex,1);
-					this.success("Category has been deleted");
-					this.deleteModal= false;
+		// async deleteCategory(){	
+		// 	this.isDeleting = true;
+		// 	const res = await this.callApi('post','app/delete_category', this.deleteItem);
+		// 	if (res.status == 200) {
+		// 			this.categories.splice(this.deletingIndex,1);
+		// 			this.success("Category has been deleted");
+		// 			this.deleteModal= false;
 
-			}
-			else{
-				this.error();
-				console.log(tag)
-			}
-			this.isDeleting = false;
-		},
+		// 	}
+		// 	else{
+		// 		this.error();
+		// 		console.log(tag)
+		// 	}
+		// 	this.isDeleting = false;
+		// },
 		async handleRemove(isAdd=true){
 			if (!isAdd) {//for editing
 				this.isIconImageNew = true;
@@ -247,9 +235,14 @@ export default{
 			this.editModal = false;
 		},
 		showDeletingModal(category,index){
-			this.deleteItem= category;
-			this.deletingIndex = index;
-			this.deleteModal = true;
+			const deleteModalObj = {
+				showDeleteModal: true,
+				deleteUrl: 'app/delete_category',
+				data: category,	
+				deletingIndex: index,
+				isDeleted: false
+       		}
+			   this.$store.commit('setDeletingModalObj',deleteModalObj);
 		},
 		handleSuccess (res, file) {
 			if (this.isEditingItem) {
@@ -293,6 +286,19 @@ export default{
 
 			}
 	},
+	components : {
+		deleteModal
+	},
+	computed:{
+		...mapGetters(['getDeleteModalObj'])
+	},
+	watch:{
+		getDeleteModalObj(obj){
+			if (obj.isDeleted) {
+				this.categories.splice(obj.deletingIndex,1);
+			}
+		}
+	}
 }
 </script>
 

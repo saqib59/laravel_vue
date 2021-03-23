@@ -9,6 +9,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import App from './vue/app';
 import router from './vue/router';
+import store from './store';
 import ViewUI from 'view-design';
 import locale from 'view-design/dist/locale/en-US';
 import 'view-design/dist/styles/iview.css';
@@ -27,6 +28,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

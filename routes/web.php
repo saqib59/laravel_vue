@@ -38,6 +38,11 @@ Route::get('app/get_categories',[App\Http\Controllers\AdminController::class, 'g
 Route::post('app/edit_category',[App\Http\Controllers\AdminController::class, 'editCategory']);
 Route::post('app/delete_category',[App\Http\Controllers\AdminController::class, 'deleteCategory']);
 
+/* User Routes */
+
+Route::post('app/create_user',[App\Http\Controllers\AdminController::class, 'createUser']);
+Route::get('app/get_users',[App\Http\Controllers\AdminController::class, 'getUsers']);
+Route::post('app/edit_user',[App\Http\Controllers\AdminController::class, 'editUser']);
 
 Route::get('/', function () {
     return view('welcome');
