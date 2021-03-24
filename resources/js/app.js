@@ -19,16 +19,17 @@ import common from './common'
 // Vue.use(VueChartkick, {
 //   adapter: Chart
 // Vue.use(VueRouter);
-Vue.use(ViewUI, {locale: locale});
+Vue.use(ViewUI, { locale: locale });
 Vue.mixin(common);
 
 Vue.config.productionTip = false
+Vue.prototype.$user = window.Laravel.user;
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: `<App/>`
 })

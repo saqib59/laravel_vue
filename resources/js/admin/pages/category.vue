@@ -58,7 +58,6 @@
 					        </div>
 					    </Upload>
 						 <div class="demo-upload-list" v-if="data.IconName">
-							 <h1
 								<img :src="`/uploads/${data.IconName}`">
 								<div class="demo-upload-list-cover">
 									<Icon type="ios-eye-outline" @click.native="handleView(data.IconName)"></Icon>

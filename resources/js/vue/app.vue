@@ -1,6 +1,6 @@
 	<template>
   <div id="app">
-    <div>
+    <div v-if="$store.state.user">
       <!--========== ADMIN SIDE MENU one ========-->
       <div class="_1side_menu" >
         <div class="_1side_menu_logo">
@@ -19,9 +19,12 @@
           <div class="_1side_menu_list">
             <ul class="_1side_menu_list_ul">
               <li> <router-link to="/"><Icon type="ios-speedometer" /> Dashboard</router-link></li>
+              <li> <router-link to="/designs"><Icon type="ios-speedometer" />Designs</router-link></li>
               <li> <router-link to="/tags"><Icon type="ios-speedometer" /> Tags</router-link></li>
               <li> <router-link to="/category"><Icon type="ios-git-network" /> Category</router-link></li>
               <li> <router-link to="/adminusers"><Icon type="md-contacts" /> Users</router-link></li>
+              <li> <router-link to="/roles"><Icon type="md-contacts" /> Role Management</router-link></li>
+              <li> <a href="/logout"><Icon type="md-power" /> Logout</a></li>
             </ul>
           </div>
         </div>
@@ -46,6 +49,14 @@
     	<router-view/>
   </div>
 </template>
+<script>
+export default {
+  created(){
+    this.$store.commit('updateUser',this.$user);
+  }
+}
+</script>
+
 
 
 

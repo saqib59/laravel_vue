@@ -179,9 +179,9 @@ export default{
 
 				const res = await this.callApi('post','app/create_user', this.data);
 			if (res.status === 201) {
-				// this.tags.unshift(res.data);
+				this.users.unshift(res.data);
 				this.success("User has been added successfully");
-				// this.addModal = false;
+				this.addModal = false;
 				// this.data.tagName = '';
                 console.log("success",res.data.errors)
 			}

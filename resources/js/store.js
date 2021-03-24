@@ -4,34 +4,41 @@ import Vuex from 'vuex';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state :{
+    state: {
         counter: 1000,
         deleteModalObj: {
             showDeleteModal: false,
             deleteUrl: '',
-            data: null,	
-			deletingIndex: -1,
+            data: null,
+            deletingIndex: -1,
             isDeleted: false
-        }
+        },
+        user: false,
     },
-    getters:{
-        getDeleteModalObj(state){
+    getters: {
+        getDeleteModalObj(state) {
             return state.deleteModalObj
-        }
+        },
+        loggedInUser(state) {
+            return state.deleteModalObj
+        },
     },
-    mutations:{
-        setDeleteModal(state,data){
+    mutations: {
+        setDeleteModal(state, data) {
             const deleteModalObj = {
                 showDeleteModal: false,
                 deleteUrl: '',
-                data: null,	
+                data: null,
                 deletingIndex: -1,
                 isDeleted: data
             }
             state.deleteModalObj = deleteModalObj;
         },
-        setDeletingModalObj(state, data){
+        setDeletingModalObj(state, data) {
             state.deleteModalObj = data;
+        },
+        updateUser(state, data) {
+            state.user = data;
         }
     }
 })

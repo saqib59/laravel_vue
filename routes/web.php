@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSubmissionController;
 /*
@@ -23,33 +24,55 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 */
+/* ADMIN ROUTES START */
 /*TAG ROUTES*/
-Route::post('app/create_tag',[App\Http\Controllers\AdminController::class, 'addTag']);
-Route::get('app/get_tags',[App\Http\Controllers\AdminController::class, 'getTags']);
-Route::post('app/edit_tag',[App\Http\Controllers\AdminController::class, 'editTag']);
-Route::post('app/delete_tag',[App\Http\Controllers\AdminController::class, 'deleteTag']);
+
+Route::prefix('app')->middleware(AdminCheck::class)->group(function(){
+    Route::post('/create_tag',[App\Http\Controllers\AdminController::class, 'addTag']);
+    Route::get('/get_tags',[App\Http\Controllers\AdminController::class, 'getTags']);
+    Route::post('/edit_tag',[App\Http\Controllers\AdminController::class, 'editTag']);
+    Route::post('/delete_tag',[App\Http\Controllers\AdminController::class, 'deleteTag']);
 
 
-/*category routes*/
-Route::post('app/upload',[App\Http\Controllers\AdminController::class, 'upload']);
-Route::post('app/delete_image',[App\Http\Controllers\AdminController::class, 'deleteImage']);
-Route::post('app/create_category',[App\Http\Controllers\AdminController::class, 'createCategory']);
-Route::get('app/get_categories',[App\Http\Controllers\AdminController::class, 'getCategories']);
-Route::post('app/edit_category',[App\Http\Controllers\AdminController::class, 'editCategory']);
-Route::post('app/delete_category',[App\Http\Controllers\AdminController::class, 'deleteCategory']);
+    /*category routes*/
+    Route::post('/upload',[App\Http\Controllers\AdminController::class, 'upload']);
+    Route::post('/delete_image',[App\Http\Controllers\AdminController::class, 'deleteImage']);
+    Route::post('/create_category',[App\Http\Controllers\AdminController::class, 'createCategory']);
+    Route::get('/get_categories',[App\Http\Controllers\AdminController::class, 'getCategories']);
+    Route::post('/edit_category',[App\Http\Controllers\AdminController::class, 'editCategory']);
+    Route::post('/delete_category',[App\Http\Controllers\AdminController::class, 'deleteCategory']);
 
-/* User Routes */
+    /* User Routes */
 
-Route::post('app/create_user',[App\Http\Controllers\AdminController::class, 'createUser']);
-Route::get('app/get_users',[App\Http\Controllers\AdminController::class, 'getUsers']);
-Route::post('app/edit_user',[App\Http\Controllers\AdminController::class, 'editUser']);
+    Route::post('/create_user',[App\Http\Controllers\AdminController::class, 'createUser']);
+    Route::get('/get_users',[App\Http\Controllers\AdminController::class, 'getUsers']);
+    Route::post('/edit_user',[App\Http\Controllers\AdminController::class, 'editUser']);
+    Route::post('/edit_user',[App\Http\Controllers\AdminController::class, 'editUser']);
 
-Route::get('/', function () {
-    return view('welcome');
+
+    /* Role management */
+    Route::post('/create_role',[App\Http\Controllers\AdminController::class, 'createRole']);
+    Route::post('/edit_role',[App\Http\Controllers\AdminController::class, 'editRole']);
+    Route::get('/get_roles',[App\Http\Controllers\AdminController::class, 'getRoles']);
+
+    Route::post('/admin_login',[App\Http\Controllers\AdminController::class, 'adminLogin']);
+
 });
-Route::any('{slug}', function () {
-    return view('welcome');
-});
+
+
+Route::get('/',[App\Http\Controllers\AdminController::class, 'index']);
+Route::get('/logout',[App\Http\Controllers\AdminController::class, 'logout']);
+
+/* ADMIN ROUTES END */
+
+Route::any('{slug}',[App\Http\Controllers\AdminController::class, 'index']);
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::any('{slug}', function () {
+//     return view('welcome');
+// });
 
 
 // Route::get('current_tasks', 'TaskController@index');

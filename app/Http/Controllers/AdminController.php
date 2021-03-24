@@ -1,13 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Role;
 use App\Models\Tags;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    /* admin login */
+    public function index(Request $request){
+        // first check if you are logged in and admin user ...
+        if(!Auth::check() && $request->path() != 'login'){ //if Auth::check() returns 1 it means user is logged in
+            return redirect('/login');
+        }
+        if(!Auth::check() && $request->path() == 'login'){
+            return view('welcome');
+        }
+        // if user logged in and is admin
+        $user = Auth::user();
+        if ($user->userRole != 'admin') {
+            return redirect('/login');
+        }
+        if($request->path() == 'login'){
+            return redirect('/');
+        }
+        return view('/welcome');
+    }
+    /* admin logout */
+    public function logout(Request $request){
+        Auth::logout();
+        return redirect('/login');
+    }
+
     /*add tag*/
     public function addTag(Request $request){
 
@@ -109,14 +136,14 @@ class AdminController extends Controller
 
     public function createUser(Request $request){
         $this->validate($request,[
-            'fullName'   => 'required',
+            'fullname'   => 'required',
             'email'   => 'required|email|unique:users',
             'autopassword'   => 'required',
             'userRole'   => 'required'
         ]);
         $password = bcrypt($request->autopassword);
         return User::create([
-            'fullname' => $request->fullName,
+            'fullname' => $request->fullname,
             'email'     => $request->email,
             'userRole'     => $request->userRole,
             'password'     => $password,
@@ -131,12 +158,12 @@ class AdminController extends Controller
     /* edit user */
     public function editUser(Request $request){
         $this->validate($request,[
-            'fullName'   => 'required',
+            'fullname'   => 'required',
             'email'   => "required|email|unique:users,email, $request->id" ,
             'userRole'   => 'required'
         ]);
          $data = [
-            'fullname' => $request->fullName,
+            'fullname' => $request->fullname,
             'email'     => $request->email,
             'userRole'     => $request->userRole,
         ];
@@ -146,6 +173,68 @@ class AdminController extends Controller
         }
         return User::where('id', $request->id)->update($data);
     }
+    /* admin login */
+    public function adminLogin(Request $request){
+        $this->validate($request,[
+            'email'     => "email|required",
+            'password'  => 'required'
+        ]);
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password ] )) {
+            $user = Auth::user();
+            if ($user->userRole != 'admin') {
+                Auth::logout();
+                return response()->json([
+                    'msg' => 'Incorrect credentials',
+                ],401);
+            }
+            return response()->json([
+                'msg' => 'You are logged in',
+            ]);
+        }
+        else{
+            return response()->json([
+                'msg' => 'Incorrect credentials',
+            ],401);
+
+        }
+         $data = [
+            'fullname' => $request->fullname,
+            'email'     => $request->email,
+            'userRole'     => $request->userRole,
+        ];
+        if ($request->password) {
+            $password = bcrypt($request->autopassword);
+            $data['password'] = $password;
+        }
+        return User::where('id', $request->id)->update($data);
+    }
+    /* create role */
+    public function createRole(Request $request){
+        $this->validate($request,[
+            'roleName'   => 'required'
+        ]);
+            return Role::create([
+                'roleName'   => $request->roleName
+            ]);
+        return User::where('id', $request->id)->update($data);
+    }
+    /* get roles */
+    public function getRoles(Request $request){
+        return response()->json([
+            "roles"=> Role::all()
+        ],200);
+    }
+    /*edit role*/
+    public function editRole(Request $request){
+        $this->validate($request,[
+            'roleName'   => 'required',
+        ]);
+        return Role::where('id', $request->id)->update([
+            'roleName' => $request->roleName
+        ]);
+    }
+    
+   
     
 }
  
