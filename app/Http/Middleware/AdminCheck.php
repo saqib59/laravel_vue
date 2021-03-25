@@ -27,7 +27,7 @@ class AdminCheck
             ],403);
         }
         $user = Auth::user();
-        if ($user->userRole != 'admin') {
+        if ($user->role->isAdmin == 0) {
 
             return response()->json([
                 'msg' => 'Access Denied'

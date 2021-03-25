@@ -11,6 +11,7 @@ import adminusers from '../admin/pages/adminusers'
 import login from '../admin/pages/login'
 import roles from '../admin/pages/roles'
 import designs from '../admin/pages/designs'
+import assignroles from '../admin/pages/assignroles'
 
 Vue.use(Router);
 
@@ -18,31 +19,45 @@ const routes = [
     /*project routes*/
     {
         path: '/',
-        component: home
+        component: home,
+        name: '/'
     },
     {
         path: '/tags',
-        component: tags
+        component: tags,
+        name: 'tags'
     },
     {
         path: '/category',
-        component: category
+        component: category,
+        name: 'category'
     },
     {
         path: '/adminusers',
-        component: adminusers
+        component: adminusers,
+        name: 'adminusers'
+
     },
     {
         path: '/login',
-        component: login
+        component: login,
+        name: 'login'
+
     },
     {
         path: '/roles',
-        component: roles
+        component: roles,
+        name: 'roles'
     },
     {
         path: '/designs',
-        component: designs
+        component: designs,
+        name: 'designs'
+    },
+    {
+        path: '/assignroles',
+        component: assignroles,
+        name: 'assignroles'
     },
     // /*hooks*/
     // {

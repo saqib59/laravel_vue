@@ -52,7 +52,6 @@
             v-model="showDrawer"
             width="720"
             :mask-closable="false"
-            :styles="styles"
         >
             <Form :model="data">
                 <Row :gutter="32">
@@ -167,26 +166,25 @@ export default{
 
 	methods : {
 		async addDesign(){
-			if (this.data.title.trim() == '') return this.error_msg('Tag name is required')
+			if (this.data.title.trim() == '') return this.error_msg('Title is required')
 			if (this.data.projectName.trim() == '') return this.error_msg('Project name is required')
-			if (this.data.category.trim() == '') return this.error_msg('Category is required')
+			if (!this.data.category) return this.error_msg('Category is required')
 			if (this.data.featuredImage.trim() == '') return this.error_msg('Image is required')
 
-            return this.success_msg('submitted')
-				// const res = await this.callApi('post','app/create_tag', this.data);
-			// if (res.status === 201) {
-			// 	this.tags.unshift(res.data);
-			// 	this.success("Tag has been added successfully");
-			// 	this.addModal = false;
-			// 	this.data.tagName = '';
-			// }
-			// else{
-			// 	if (res.status == 422) {
-			// 		if (res.data.errors.tagName) {
-			// 			this.warning(res.data.errors.tagName);
-			// 		}
-			// 	}
-			// }
+			const res = await this.callApi('post','app/add_design', this.data);
+			console.log("res",res);
+			if (res.status === 201) {
+				this.tags.unshift(res.data);
+				this.success_msg("Design has been added successfully");
+				this.showDrawer = false;
+			}
+			else{
+				if (res.status == 422) {
+					if (res.data.errors.tagName) {
+						this.warning(res.data.errors.tagName);
+					}
+				}
+			}
 		},
 		async editTag(){
 			if (this.editData.tagName.trim() == '') return this.error('Tag name is required')
@@ -233,7 +231,6 @@ export default{
 		},
 		handleMaxSize (file) {
             this.warning_msg('File  ' + file.name + ' is too large, no more than 2M.')
-
 		},
         async handleRemove(isAdd=true){
 			if (!isAdd) {//for editing

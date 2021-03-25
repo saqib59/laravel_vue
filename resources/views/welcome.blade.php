@@ -11,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/css/all.css">    
     <script>
         window.Laravel = {
-            user : {!! auth()->user() ?? 'false' !!}
+            user : {!! auth()->user() ?? 'false' !!},
+            permission : {!! auth()->user()->role->permissions ?? 'false' !!}
         }
     </script>
     <script type="text/javascript" src="{{ mix('js/app.js') }}" defer></script>    

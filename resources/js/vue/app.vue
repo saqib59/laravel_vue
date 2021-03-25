@@ -14,16 +14,20 @@
             <!-- <img class="_1side_menu_img" src="/pic.png" alt="" title=""> -->
             <p class="_1side_menu_name">Admin</p>
           </div>
-
           <!--~~~ MENU LIST ~~~~~~-->
           <div class="_1side_menu_list">
             <ul class="_1side_menu_list_ul">
-              <li> <router-link to="/"><Icon type="ios-speedometer" /> Dashboard</router-link></li>
-              <li> <router-link to="/designs"><Icon type="ios-speedometer" />Designs</router-link></li>
-              <li> <router-link to="/tags"><Icon type="ios-speedometer" /> Tags</router-link></li>
+              <li v-for="(menuItem, index) in $userPermission" :key="index" v-if="$userPermission.length && menuItem.read"> 
+                <router-link :to="menuItem.name">
+              <Icon type="ios-speedometer" /> {{menuItem.contentName}}
+                </router-link>
+              </li>
+              <!-- <li> <router-link to="/designs"><Icon type="md-aperture" />Designs</router-link></li>
+              <li> <router-link to="/tags"><Icon type="md-pricetags" /> Tags</router-link></li>
               <li> <router-link to="/category"><Icon type="ios-git-network" /> Category</router-link></li>
-              <li> <router-link to="/adminusers"><Icon type="md-contacts" /> Users</router-link></li>
+              <li> <router-link to="/adminusers"><Icon type="md-person" /> Users</router-link></li>
               <li> <router-link to="/roles"><Icon type="md-contacts" /> Role Management</router-link></li>
+              <li> <router-link to="/assignroles"><Icon type="ios-key" />Permssions</router-link></li> -->
               <li> <a href="/logout"><Icon type="md-power" /> Logout</a></li>
             </ul>
           </div>
@@ -53,6 +57,7 @@
 export default {
   created(){
     this.$store.commit('updateUser',this.$user);
+    console.log("this.$permission",this.$userPermission);
   }
 }
 </script>

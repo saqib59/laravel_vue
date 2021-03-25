@@ -22,7 +22,7 @@
 								<td>{{user.id}}</td>
 								<td class="_table_name">{{user.fullname}}</td>
 								<td>{{user.email}}</td>
-								<td>{{user.userRole}}</td>
+								<td>{{user.role_id}}</td>
 								<td>
 								   	<Button type="info" size="small" @click="showEditModal(user, i)">Edit</Button>
 								    <Button type="error" size="small" @click="showDeletingModal(user, i)" :loading="user.isDeleting">Delete</Button>
@@ -50,9 +50,8 @@
                             </Input>
                         </div>
                         <div class="space">
-                            <Select v-model="data.userRole" placeholder="Select User Role">
-                                <Option value="team_lead" >Team Lead</Option>
-                                <Option value="user" >User</Option>
+                            <Select v-model="data.role_id" placeholder="Select User Role">
+									<Option  :value="role.id" v-for="(role, index) in roles" :key="index" v-if="roles.length">{{role.roleName}}</Option>
                             </Select>
                         </div>
 				        <div slot="footer">
@@ -80,9 +79,8 @@
                             </Input>
                         </div>
                         <div class="space">
-                            <Select v-model="editData.userRole" placeholder="Select User Role">
-                                <Option value="team_lead" >Team Lead</Option>
-                                <Option value="user" >User</Option>
+                            <Select v-model="editData.role_id" placeholder="Select User Role">
+                                <Option  value="role.id" v-for="(role, index) in roles" :key="index" v-if="roles.length">{{role.roleName}}</Option>
                             </Select>
                         </div>
 				        <div slot="footer">
@@ -107,18 +105,18 @@ export default{
                 fullname:'',
                 email:'',
 				autopassword: '',
-                userRole: ''
+				role_id: null
 			},
 			addModal: false,
 			editModal: false,
 			deleteModal: false,
 			isAdding: false,
 			users:[],
+			roles:[],
 			editData : {
                 id: "",
 				fullname: "",
 				email: "",
-				userRole: ""
 			},
 			index: -1,
 			showDeleteModal: false,
@@ -174,7 +172,7 @@ export default{
 		async addUser(){
 			if (this.data.fullname.trim() == '') return this.error('User fullname is required')
 			if (this.data.autopassword.trim() == '') return this.error('Password is required')
-			if (this.data.userRole.trim() == '') return this.error('User Role is required')
+			if (!this.data.role_id) return this.error('User Role is required')
 			if (this.data.email.trim() == '') return this.error('Email is required')
 
 				const res = await this.callApi('post','app/create_user', this.data);
@@ -197,7 +195,7 @@ export default{
 		},
 		async editUser(){
             if (this.editData.fullname.trim() == '') return this.error('User fullname is required')
-			if (this.editData.userRole.trim() == '') return this.error('User Role is required')
+			if (!this.data.role_id) return this.error('User Role is required')
 			if (this.editData.email.trim() == '') return this.error('Email is required')
 
 				const res = await this.callApi('post','app/edit_user', this.editData);
@@ -221,7 +219,7 @@ export default{
 				id: user.id,
 				fullname: user.fullname,
 				email: user.email,
-				userRole: user.userRole   
+				role_id: user.role_id   
 			}
 			this.editData = obj;
 			this.editModal = true;
@@ -255,10 +253,20 @@ export default{
 	},
 	
 	async created(){
-		const res = await this.callApi('get','app/get_users', this.data);
+		const [res,resRoles] = await Promise.all([
+			this.callApi('get','app/get_users', this.data),
+			this.callApi('get','app/get_roles', this.data),
+		]);
 			if (res.status === 200) {
 				this.users = res.data.users;
 				console.log("users",this.users);
+			}
+			else{
+				this.error("Something went wrong");
+			}
+			if (resRoles.status === 200) {
+				this.roles = resRoles.data.roles;
+				console.log("roles",this.roles);
 			}
 			else{
 				this.error("Something went wrong");

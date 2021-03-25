@@ -24,8 +24,10 @@ Vue.mixin(common);
 
 Vue.config.productionTip = false
 Vue.prototype.$user = window.Laravel.user;
+Vue.prototype.$userPermission = window.Laravel.permission;
 
 /* eslint-disable no-new */
+
 new Vue({
     el: '#app',
     router,
