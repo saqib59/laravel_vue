@@ -4,7 +4,7 @@
 			<div class="container-fluid">
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">All Designs <Button @click="showDrawer=true"><Icon type="md-add" /> Add new design</Button></p>
+					<p class="_title0">All Designs <Button v-if="isWritePermitted"  @click="showDrawer=true"><Icon type="md-add" /> Add new design</Button></p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -22,8 +22,8 @@
 								<td class="_table_name">{{tag.tagName}}</td>
 								<td>{{tag.created_at}}</td>
 								<td>
-								   	<Button type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
-								    <Button type="error" size="small" @click="showDeletingModal(tag, i)" :loading="tag.isDeleting">Delete</Button>
+								   	<Button v-if="isUpdatePermitted" type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
+								    <Button v-if="isDeletePermitted" type="error" size="small" @click="showDeletingModal(tag, i)" :loading="tag.isDeleting">Delete</Button>
 								</td>
 							</tr>
 						</table>
@@ -69,14 +69,14 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="Category" label-position="top">
-                            <Select v-model="data.category">
+                            <Select filterable v-model="data.category" multiple>
                                 <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.categoryName }}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="Tags" label-position="top">
-                            <Select v-model="data.type" multiple>
+                            <Select v-model="data.tags" multiple>
                                 <Option v-for="tag in tags" :value="tag.id" :key="tag.id">{{ tag.tagName }}</Option>
                             </Select>
                         </FormItem>
@@ -134,7 +134,7 @@ export default{
 				projectName: '',
                 user_id:'',
 				category: '',
-				tag: '',
+				tags: '',
                 featuredImage:  '',
                 metaDescription: ''
 			},
@@ -173,7 +173,7 @@ export default{
 
 			const res = await this.callApi('post','app/add_design', this.data);
 			console.log("res",res);
-			if (res.status === 201) {
+			if (res.status === 200) {
 				this.tags.unshift(res.data);
 				this.success_msg("Design has been added successfully");
 				this.showDrawer = false;
@@ -278,18 +278,13 @@ export default{
 	
 	async created(){
         this.token = document.querySelector('meta[name="csrf-token"').content;
-		const res_tags = await this.callApi('get','app/get_tags', this.data);
-			if (res_tags.status === 200) {
-				this.tags = res_tags.data.tags;
-				console.log("this.tags",this.tags);
-			}
-			else{
-				this.error("Something went wrong");
-			}
-        const res = await this.callApi('get','app/get_categories', this.data);
-			if (res.status === 200) {
-				this.categories = res.data.categories;
-				console.log("this.categories",this.categories);
+		const [res_tag,res_cat] = await Promise.all([
+			this.callApi('get','app/get_tags'),
+			this.callApi('get','app/get_categories')
+		])
+			if (res_cat.status === 200) {
+				this.tags = res_tag.data.tags;
+				this.categories = res_cat.data.categories;
 			}
 			else{
 				this.error("Something went wrong");

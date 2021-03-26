@@ -5,8 +5,11 @@ use App\Models\Blog;
 use App\Models\Role;
 use App\Models\Tags;
 use App\Models\User;
+use App\Models\Blogtag;
 use App\Models\Category;
+use App\Models\Blogcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -265,19 +268,47 @@ class AdminController extends Controller
 
     /* add a new design */
     public function addDesign(Request $request){
+
+        $categories = $request->category;
+        $tags = $request->tags;
+        $blogCategories = [];
+        $blogTags = [];
+        
         $this->validate($request,[
             'title'   => 'required',
             'featuredImage'   => 'required'
         ]);
-    	return Blog::create([
-    		'title' => $request->title,
-            'post'     => $request->projectName,
-            'slug'     => $request->projectName,
-            'user_id'     => 0,
-            'views'     => 0,
-            'featuredImage' => $request->featuredImage,
-            'metaDescription' => $request->metaDescription,
-    	]);
+        DB::beginTransaction();
+        try {
+            $blog = Blog::create([
+                'title' => $request->title,
+                'post'     => $request->projectName,
+                'user_id'     => Auth::user()->id,
+                'views'     => 0,
+                'featuredImage' => $request->featuredImage,
+                'metaDescription' => $request->metaDescription,
+            ]);
+                // insert blog categories
+            foreach($categories as $category){
+                array_push($blogCategories, ['category_id' => $category, 'blog_id' => $blog->id] );
+            }
+            Blogcategory::insert($blogCategories);
+    
+                // insert blog tags
+            foreach($tags as $tag){
+                array_push($blogTags, ['tag_id' => $tag, 'blog_id' => $blog->id] );
+            }
+            Blogtag::insert($blogTags);  
+            DB::commit();
+            return 'done';
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return 'not done';
+        }
+    	
+    }
+    public function designListing(Request $request){
+        return Blog::with(['tag','cat'])->get();
     }
 }
  

@@ -62,9 +62,10 @@ Route::prefix('app')->middleware(AdminCheck::class)->group(function(){
     Route::post('/admin_login',[App\Http\Controllers\AdminController::class, 'adminLogin']);
 
 });
-
+// Route::get('/create_slug',[App\Http\Controllers\AdminController::class, 'slug_generate']);
 
 Route::get('/',[App\Http\Controllers\AdminController::class, 'index']);
+Route::get('blog_data',[App\Http\Controllers\AdminController::class, 'designListing']);
 Route::get('/logout',[App\Http\Controllers\AdminController::class, 'logout']);
 
 /* ADMIN ROUTES END */

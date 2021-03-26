@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blogtag extends Model
 {
-    use HasFactory;
+    protected $fillable = ['tag_id', 'blog_id'];
 }

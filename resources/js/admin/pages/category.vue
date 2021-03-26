@@ -4,7 +4,7 @@
 			<div class="container-fluid">
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">Categories  <Button @click="addModal=true"><Icon type="md-add" /> Add Category</Button></p>
+					<p class="_title0">Categories  <Button v-if="isWritePermitted" @click="addModal=true"><Icon type="md-add" /> Add Category</Button></p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -18,7 +18,7 @@
 							</tr>
 								<!-- TABLE TITLE -->
 								<!-- ITEMS -->
-							<tr v-for="(category , i) in categories" :key="i">
+							<tr v-for="(category , i ) in categories" :key="i">
 								<td>{{category.id}}</td>
 								<td class="table_image">
 									<img :src="`uploads/${category.IconName}`" />
@@ -26,8 +26,8 @@
 								<td class="_table_name">{{category.categoryName}}</td>
 								<td>{{category.created_at}}</td>
 								<td>
-								   	<Button type="info" size="small" @click="showEditModal(category, i)">Edit</Button>
-								    <Button type="error" size="small" @click="showDeletingModal(category, i)" :loading="category.isDeleting">Delete</Button>
+								   	<Button v-if="isUpdatePermitted" type="info" size="small" @click="showEditModal(category, i)">Edit</Button>
+								    <Button v-if="isDeletePermitted" type="error" size="small" @click="showDeletingModal(category, i)" :loading="category.isDeleting">Delete</Button>
 								</td>
 							</tr>
 						</table>

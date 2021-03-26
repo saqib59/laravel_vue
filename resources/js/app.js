@@ -14,17 +14,18 @@ import ViewUI from 'view-design';
 import locale from 'view-design/dist/locale/en-US';
 import 'view-design/dist/styles/iview.css';
 import common from './common'
-// import Chart from 'chart.js'
+import Editor from 'vue-editor-js/src/index';
 
-// Vue.use(VueChartkick, {
-//   adapter: Chart
-// Vue.use(VueRouter);
+
 Vue.use(ViewUI, { locale: locale });
+Vue.use(Editor);
+
 Vue.mixin(common);
 
 Vue.config.productionTip = false
 Vue.prototype.$user = window.Laravel.user;
 Vue.prototype.$userPermission = window.Laravel.permission;
+
 
 /* eslint-disable no-new */
 
