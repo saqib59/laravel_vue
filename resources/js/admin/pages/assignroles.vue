@@ -51,6 +51,7 @@ export default{
             roles:[],
             contentType:[
                 {contentName:'Home', read:false, write: false, update: false, delete: false, name: '/'},
+                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: '/spinwin'},
                 {contentName:'Designs', read:false, write: false, update: false, delete: false, name: 'designs'},
                 {contentName:'Tags', read:false, write: false, update: false, delete: false, name: 'tags'},
                 {contentName:'Category', read:false, write: false, update: false, delete: false, name: 'category'},
@@ -61,6 +62,7 @@ export default{
             ],
             contentTypeDefault:[
                 {contentName:'Home', read:false, write: false, update: false, delete: false, name: '/'},
+                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: '/spinwin'},
                 {contentName:'Designs', read:false, write: false, update: false, delete: false, name: 'designs'},
                 {contentName:'Tags', read:false, write: false, update: false, delete: false, name: 'tags'},
                 {contentName:'Category', read:false, write: false, update: false, delete: false, name: 'category'},
@@ -103,7 +105,7 @@ export default{
                     console.log("res.data.length",res.data.length);
                     this.data.id = res.data.roles[1].id;
                     if(res.data.roles[1].permissions){
-                        this.contentType = JSON.parse(res.data.roles[1].permissions);
+                        // this.contentType = JSON.parse(res.data.roles[1].permissions);
                         console.log("res.contentType",this.contentType)
                     }
                     else{

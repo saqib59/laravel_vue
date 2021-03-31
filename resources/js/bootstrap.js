@@ -1,5 +1,7 @@
 window._ = require('lodash');
-
+if (process.env.APP_ENV == 'prod') {
+    axios.defaults.baseURL = "http://dev71.onlinetestingserver.com/antoine-mathews";
+}
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

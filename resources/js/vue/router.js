@@ -12,6 +12,7 @@ import login from '../admin/pages/login'
 import roles from '../admin/pages/roles'
 import designs from '../admin/pages/designs'
 import assignroles from '../admin/pages/assignroles'
+import spinwin from '../admin/pages/spinwin'
 
 Vue.use(Router);
 
@@ -58,6 +59,11 @@ const routes = [
         path: '/assignroles',
         component: assignroles,
         name: 'assignroles'
+    },
+    {
+        path: '/spinwin',
+        component: spinwin,
+        name: 'spinwin'
     },
     // /*hooks*/
     // {
