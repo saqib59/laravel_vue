@@ -81,7 +81,7 @@ var router = new Router({
     mode: 'history',
     routes,
     fallback: true,
-    base: (process.env.MIX_APP_ENV == "prod") ? "/spin_and_win" : "/Saqib/laravel/",
+    base: (process.env.MIX_APP_ENV == "prod") ? "/spin_and_win/" : "/Saqib/laravel/",
 })
 
 export default router

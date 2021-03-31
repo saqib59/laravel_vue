@@ -66,7 +66,7 @@ export default {
         },
         isProd() {
             if (process.env.MIX_APP_ENV == "prod") {
-                return "/spin_and_win";
+                return "/spin_and_win/";
             } else {
                 return "/Saqib/laravel/"
             }
