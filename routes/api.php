@@ -26,3 +26,5 @@ Route::prefix('/item')->group(function(){
 
 	// Route::post('/store', 'ItemsController@store');
 });
+
+Route::post('/create_token_spinnwin',[App\Http\Controllers\AdminController::class, 'createTokenSpinnWin']);

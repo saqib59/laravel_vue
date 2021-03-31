@@ -4,7 +4,7 @@
 			<div class="container-fluid">
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">Tags  <Button @click="addModal=true"><Icon type="md-add" /> Add User</Button></p>
+					<p class="_title0">Spin And Win  <Button @click="addModal=true"><Icon type="md-add" /> Add User</Button></p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -39,20 +39,7 @@
 				        :closable = "false"
 				        >
                         <div class="space">
-    				        <Input v-model="data.fullname" placeholder="User Name" />
-                        </div>
-                        <div class="space">
-                            <Input v-model="data.email" placeholder="User Email" />
-                        </div>
-                        <div class="space">
-                            <Input v-model="data.autopassword" placeholder="User Password">
-                                <Button slot="append" icon="ios-key" @click="generate"></Button>
-                            </Input>
-                        </div>
-                        <div class="space">
-                            <Select v-model="data.role_id" placeholder="Select User Role">
-									<Option  :value="role.id" v-for="(role, index) in roles" :key="index" v-if="roles.length">{{role.roleName}}</Option>
-                            </Select>
+    				        <Input v-model="data.url" placeholder="Site Url" />
                         </div>
 				        <div slot="footer">
 				        	<Button type="default" @click="addModal=false">Close</Button>
@@ -102,10 +89,8 @@ export default{
 	data(){
 		return{
 			data:{
-                fullname:'',
-                email:'',
-				autopassword: '',
-				role_id: null
+                url:'',
+                token:'',
 			},
 			addModal: false,
 			editModal: false,
@@ -132,7 +117,7 @@ export default{
         },
         size: {
             type: String,
-            default: '16'
+            default: '24'
         },
         characters: {
             type: String,
@@ -167,15 +152,12 @@ export default{
             for(let i=0; i < this.size; i++) {
                 password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
             }
-             this.data.autopassword = password;
+             this.data.token = password;
     },
 		async addUser(){
-			if (this.data.fullname.trim() == '') return this.error('User fullname is required')
-			if (this.data.autopassword.trim() == '') return this.error('Password is required')
-			if (!this.data.role_id) return this.error('User Role is required')
-			if (this.data.email.trim() == '') return this.error('Email is required')
-
-				const res = await this.callApi('post','app/create_user', this.data);
+			if (this.data.url.trim() == '') return this.error('Site Url is required')
+				this.generate();
+				const res = await this.callApi('post','api/create_token_spinnwin', this.data);
 			if (res.status === 201) {
 				this.users.unshift(res.data);
 				this.success("User has been added successfully");

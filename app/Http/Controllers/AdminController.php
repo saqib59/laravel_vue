@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Blogtag;
 use App\Models\Category;
 use App\Models\Blogcategory;
+use App\Models\Siterecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,6 @@ class AdminController extends Controller
                 if($p->read){
                     $has_permission = true;
                 }
-
             }
         }
         if($has_permission) return view('welcome');
@@ -292,6 +292,7 @@ class AdminController extends Controller
             foreach($categories as $category){
                 array_push($blogCategories, ['category_id' => $category, 'blog_id' => $blog->id] );
             }
+            // $blog->cat()->attach($categories);
             Blogcategory::insert($blogCategories);
     
                 // insert blog tags
@@ -309,6 +310,17 @@ class AdminController extends Controller
     }
     public function designListing(Request $request){
         return Blog::with(['tag','cat'])->get();
+    }
+    public function createTokenSpinnWin(Request $request){
+        $this->validate($request,[
+            'url' => 'required|url',
+            'token' => 'required'
+        ]);
+        return Siterecord::create([
+            'user_id' => Auth::user()->id,
+            'url' => $request->url,
+            'token' => $request->token
+        ]);
     }
 }
  

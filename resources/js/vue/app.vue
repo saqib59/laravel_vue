@@ -19,7 +19,7 @@
             <ul class="_1side_menu_list_ul">
               <li v-for="(menuItem, index) in $userPermission" :key="index" v-if="$userPermission.length && menuItem.read"> 
                 <router-link :to="menuItem.name">
-              <Icon type="ios-speedometer" /> {{menuItem.contentName}}
+              <Icon type="md-arrow-dropright" /> {{menuItem.contentName}}
                 </router-link>
               </li>
               <!-- <li> <router-link to="/designs"><Icon type="md-aperture" />Designs</router-link></li>

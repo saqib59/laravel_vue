@@ -51,7 +51,7 @@ export default{
             roles:[],
             contentType:[
                 {contentName:'Home', read:false, write: false, update: false, delete: false, name: '/'},
-                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: '/spinwin'},
+                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: 'spinwin'},
                 {contentName:'Designs', read:false, write: false, update: false, delete: false, name: 'designs'},
                 {contentName:'Tags', read:false, write: false, update: false, delete: false, name: 'tags'},
                 {contentName:'Category', read:false, write: false, update: false, delete: false, name: 'category'},
@@ -62,7 +62,7 @@ export default{
             ],
             contentTypeDefault:[
                 {contentName:'Home', read:false, write: false, update: false, delete: false, name: '/'},
-                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: '/spinwin'},
+                {contentName:'Spin and Win', read:false, write: false, update: false, delete: false, name: 'spinwin'},
                 {contentName:'Designs', read:false, write: false, update: false, delete: false, name: 'designs'},
                 {contentName:'Tags', read:false, write: false, update: false, delete: false, name: 'tags'},
                 {contentName:'Category', read:false, write: false, update: false, delete: false, name: 'category'},
