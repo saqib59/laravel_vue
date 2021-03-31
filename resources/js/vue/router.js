@@ -76,6 +76,7 @@ const routes = [
     // 	component: methods
     // }
 ]
+alert(process.env.MIX_APP_ENV);
 var router = new Router({
     // mode: 'history',
     routes,
