@@ -1,7 +1,7 @@
 window._ = require('lodash');
 
 if (process.env.MIX_APP_ENV == 'prod') {
-    axios.defaults.baseURL = "http://dev71.onlinetestingserver.com/antoine-mathews";
+    axios.defaults.baseURL = "http://dev71.onlinetestingserver.com/spin_and_win/";
 }
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
