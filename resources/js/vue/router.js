@@ -76,9 +76,8 @@ const routes = [
     // 	component: methods
     // }
 ]
-alert(process.env.MIX_APP_ENV);
 var router = new Router({
-    // mode: 'history',
+    mode: 'history',
     routes,
     fallback: true,
     base: (process.env.MIX_APP_ENV == "locals") ? "/spin_and_win/" : "/Saqib/laravel/",
