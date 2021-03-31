@@ -19,7 +19,6 @@
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>    
      </head>
     <body>
-        <h1>asdasdasd</h1>
         <div id="app">
             
         </div>

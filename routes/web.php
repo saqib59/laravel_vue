@@ -70,7 +70,7 @@ Route::get('/logout',[App\Http\Controllers\AdminController::class, 'logout']);
 
 /* ADMIN ROUTES END */
 
-Route::any('{slug}',[App\Http\Controllers\AdminController::class, 'index']);
+Route::any('{slug}',[App\Http\Controllers\AdminController::class, 'index'])->where('path', '.*');
 
 // Route::get('/', function () {
 //     return view('welcome');

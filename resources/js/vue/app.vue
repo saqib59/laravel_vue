@@ -28,7 +28,7 @@
               <li> <router-link to="/adminusers"><Icon type="md-person" /> Users</router-link></li>
               <li> <router-link to="/roles"><Icon type="md-contacts" /> Role Management</router-link></li>
               <li> <router-link to="/assignroles"><Icon type="ios-key" />Permssions</router-link></li> -->
-              <li> <a href="/logout"><Icon type="md-power" /> Logout</a></li>
+              <li> <a href="logout"><Icon type="md-power" /> Logout</a></li>
             </ul>
           </div>
         </div>
@@ -55,6 +55,11 @@
 </template>
 <script>
 export default {
+  methods:{
+    checkProd(){
+      this.isProd();
+    }
+  },
   created(){
     this.$store.commit('updateUser',this.$user);
     this.$store.commit('setUserPermission',this.$userPermission);

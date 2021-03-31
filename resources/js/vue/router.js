@@ -21,7 +21,7 @@ const routes = [
     {
         path: '/',
         component: home,
-        name: '/'
+        name: 'home'
     },
     {
         path: '/tags',
@@ -77,7 +77,11 @@ const routes = [
     // }
 ]
 
-export default new Router({
+var router = new Router({
     mode: 'history',
-    routes
+    routes,
+    fallback: true,
+    base: (process.env.MIX_APP_ENV == "prod") ? "spinandwin" : "/Saqib/laravel/",
 })
+
+export default router

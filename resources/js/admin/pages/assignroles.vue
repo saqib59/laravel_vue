@@ -105,7 +105,7 @@ export default{
                     console.log("res.data.length",res.data.length);
                     this.data.id = res.data.roles[1].id;
                     if(res.data.roles[1].permissions){
-                        // this.contentType = JSON.parse(res.data.roles[1].permissions);
+                        this.contentType = JSON.parse(res.data.roles[1].permissions);
                         console.log("res.contentType",this.contentType)
                     }
                     else{

@@ -63,6 +63,13 @@ export default {
             }
             return isPermitted;
             // console.log("this.$route", this.$route.name)
+        },
+        isProd() {
+            if (process.env.MIX_APP_ENV == "prod") {
+                return "spinandwin";
+            } else {
+                return "/Saqib/laravel/"
+            }
         }
     },
     computed: {

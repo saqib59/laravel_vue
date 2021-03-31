@@ -41,7 +41,7 @@ export default {
             if (res.status === 200) {
 				this.success(res.data.msg);
 				// this.data.tagName = '';
-                window.location = '/';
+                window.location = this.isProd();
 			}
             else if(res.status == 422){
                 console.log(res.data.errors.email);

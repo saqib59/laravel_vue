@@ -21,3 +21,25 @@ mix.styles([
     ],
     'public/css/all.css',
 );
+
+
+
+// if (mix.inProduction()) {
+
+//     mix.webpackConfig({
+//         output: {
+//             publicPath: './intellectBay/public/',
+//             chunkFilename: 'js/chunks/[name].[chunkhash].js'
+//         },
+//     });
+//     mix.setResourceRoot('./');
+//     // mix.setPublicPath('intellectBay/public');
+// } else {
+//     mix.webpackConfig({
+//         output: {
+//             publicPath: './Saqib/laravel/public/',
+//             chunkFilename: 'js/chunks/[name].[chunkhash].js'
+//         },
+//     });
+//     mix.setResourceRoot('./');
+// }
