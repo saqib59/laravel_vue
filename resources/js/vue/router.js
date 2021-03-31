@@ -76,9 +76,8 @@ const routes = [
     // 	component: methods
     // }
 ]
-
 var router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes,
     fallback: true,
     base: (process.env.MIX_APP_ENV == "prod") ? "/spin_and_win/" : "/Saqib/laravel/",
