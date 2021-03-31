@@ -15,7 +15,7 @@
             permission : {!! auth()->user()->role->permissions ?? 'false' !!}
         }
     </script>
-    <script type="text/javascript" src="{{ mix('js/app.js') }}" defer></script>    
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>    
      </head>
     <body>
         <div id="app">
