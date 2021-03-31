@@ -8,7 +8,8 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Fonts -->
-    <link rel="stylesheet" type="text/css" href="/css/all.css">    
+        
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/all.css') }}">    
     <script>
         window.Laravel = {
             user : {!! auth()->user() ?? 'false' !!},
