@@ -1,6 +1,6 @@
 window._ = require('lodash');
-alert(process.env.APP_ENV);
-if (process.env.APP_ENV == 'prod') {
+alert(process.env.MIX_APP_ENV);
+if (process.env.MIX_APP_ENV == 'prod') {
     axios.defaults.baseURL = "http://dev71.onlinetestingserver.com/antoine-mathews";
 }
 /**
