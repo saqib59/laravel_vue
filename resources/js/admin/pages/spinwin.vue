@@ -11,21 +11,21 @@
 								<!-- TABLE TITLE -->
 							<tr>
 								<th>ID</th>
-								<th>UserName</th>
-								<th>Email</th>
-								<th>User Role</th>
+								<th>User Id</th>
+								<th>Website Url</th>
+								<th>Token</th>
 								<th>Action</th>
 							</tr>
 								<!-- TABLE TITLE -->
 								<!-- ITEMS -->
-							<tr v-for="(user , i) in users" :key="i" v-if="users.length">
-								<td>{{user.id}}</td>
-								<td class="_table_name">{{user.fullname}}</td>
-								<td>{{user.email}}</td>
-								<td>{{user.role_id}}</td>
+							<tr v-for="(app , i) in registered_apps" :key="i" v-if="registered_apps.length">
+								<td>{{app.id}}</td>
+								<td class="_table_name">{{app.user_id}}</td>
+								<td>{{app.url}}</td>
+								<td>{{app.token}}</td>
 								<td>
-								   	<Button type="info" size="small" @click="showEditModal(user, i)">Edit</Button>
-								    <Button type="error" size="small" @click="showDeletingModal(user, i)" :loading="user.isDeleting">Delete</Button>
+								   	<Button type="info" size="small" @click="showEditModal(app, i)">Edit</Button>
+								    <Button type="error" size="small" @click="showDeletingModal(app, i)" :loading="app.isDeleting">Delete</Button>
 								</td>
 							</tr>
 						</table>
@@ -43,7 +43,7 @@
                         </div>
 				        <div slot="footer">
 				        	<Button type="default" @click="addModal=false">Close</Button>
-				        	<Button type="primary" @click="addUser" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add User'}}</Button>
+				        	<Button type="primary" @click="addSiteRecord" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add User'}}</Button>
 				        </div>
 				    </Modal>
 
@@ -54,21 +54,8 @@
 				        :mask-closable = "false"
 				        :closable = "false"
 				        >
-                         <div class="space">
-    				        <Input v-model="editData.fullname" placeholder="User Name" />
-                        </div>
                         <div class="space">
-                            <Input v-model="editData.email" placeholder="User Email" />
-                        </div>
-                        <div class="space">
-                            <Input v-model="data.autopassword" placeholder="User Password">
-                                <Button slot="append" icon="ios-key" @click="generate"></Button>
-                            </Input>
-                        </div>
-                        <div class="space">
-                            <Select v-model="editData.role_id" placeholder="Select User Role">
-                                <Option  value="role.id" v-for="(role, index) in roles" :key="index" v-if="roles.length">{{role.roleName}}</Option>
-                            </Select>
+    				        <Input v-model="editData.url" placeholder="Edit Site Url" />
                         </div>
 				        <div slot="footer">
 				        	<Button type="default" @click="editModal=false">Close</Button>
@@ -91,17 +78,18 @@ export default{
 			data:{
                 url:'',
                 token:'',
+				user_id:''
 			},
 			addModal: false,
 			editModal: false,
 			deleteModal: false,
 			isAdding: false,
-			users:[],
+			registered_apps:[],
 			roles:[],
 			editData : {
-                id: "",
-				fullname: "",
-				email: "",
+                url:'',
+				user_id:'',
+                token:'',
 			},
 			index: -1,
 			showDeleteModal: false,
@@ -117,7 +105,7 @@ export default{
         },
         size: {
             type: String,
-            default: '24'
+            default: '32'
         },
         characters: {
             type: String,
@@ -153,17 +141,19 @@ export default{
                 password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
             }
              this.data.token = password;
+			 this.data.user_id = this.$user.id;
     },
-		async addUser(){
-			if (this.data.url.trim() == '') return this.error('Site Url is required')
+		async addSiteRecord(){
 				this.generate();
+			if (this.data.url.trim() == '') return this.error('Site Url is required')
+			if (!this.data.user_id) return this.error('Unauthorized request')
 				const res = await this.callApi('post','api/create_token_spinnwin', this.data);
 			if (res.status === 201) {
-				this.users.unshift(res.data);
-				this.success("User has been added successfully");
+				this.registered_apps.unshift(res.data);
+				this.success("App registered successfully");
 				this.addModal = false;
 				// this.data.tagName = '';
-                console.log("success",res.data.errors)
+                console.log("success",res)
 			}
 			else{
 				if (res.status == 422) {
@@ -196,12 +186,12 @@ export default{
 				}
 			}
 		},
-		showEditModal(user, index){
+		showEditModal(app, index){
 			let obj = {
-				id: user.id,
-				fullname: user.fullname,
-				email: user.email,
-				role_id: user.role_id   
+				id: app.id,
+				user_id: app.user_id,
+				url: app.url,
+				token: app.token   
 			}
 			this.editData = obj;
 			this.editModal = true;
@@ -236,12 +226,12 @@ export default{
 	
 	async created(){
 		const [res,resRoles] = await Promise.all([
-			this.callApi('get','app/get_users', this.data),
+			this.callApi('get','api/get_site_records', this.data),
 			this.callApi('get','app/get_roles', this.data),
 		]);
 			if (res.status === 200) {
-				this.users = res.data.users;
-				console.log("users",this.users);
+				this.registered_apps = res.data.registered_apps;
+				console.log("registered_apps",this.registered_apps);
 			}
 			else{
 				this.error("Something went wrong");

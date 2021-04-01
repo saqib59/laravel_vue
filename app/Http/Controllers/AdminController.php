@@ -311,16 +311,5 @@ class AdminController extends Controller
     public function designListing(Request $request){
         return Blog::with(['tag','cat'])->get();
     }
-    public function createTokenSpinnWin(Request $request){
-        $this->validate($request,[
-            'url' => 'required|url',
-            'token' => 'required'
-        ]);
-        return Siterecord::create([
-            'user_id' => Auth::user()->id,
-            'url' => $request->url,
-            'token' => $request->token
-        ]);
-    }
 }
  

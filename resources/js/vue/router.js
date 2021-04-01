@@ -79,7 +79,7 @@ const routes = [
 var router = new Router({
     mode: 'history',
     routes,
-    base: (process.env.MIX_APP_ENV == "locals") ? "/spin_and_win/" : "/Saqib/laravel/",
+    base: (process.env.MIX_APP_ENV == "local") ? "/spin_and_win/" : "/Saqib/laravel/",
 })
 
 export default router
