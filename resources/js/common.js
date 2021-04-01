@@ -65,7 +65,7 @@ export default {
             // console.log("this.$route", this.$route.name)
         },
         isProd() {
-            if (process.env.MIX_APP_ENV == "local") {
+            if (process.env.MIX_APP_ENV == "locals") {
                 return "/spin_and_win/";
             } else {
                 return "/Saqib/laravel/"
