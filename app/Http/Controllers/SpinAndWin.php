@@ -52,8 +52,14 @@ class SpinAndWin extends Controller
     /* get items */
     public function getItems(Request $request){
         // $task_array = json_decode($request);
-        $items = Siteitem::where('token', $request->token)->first();
-        $items = json_decode($items->items);
-        return $items;
+        try {
+            $items = Siteitem::where('token', $request->token)->first();
+            $items = json_decode($items->items);
+            return $items;
+
+        } catch (\Throwable $th) {
+            $response['error'] = "No items found";
+            return $response;
+        }
     }
 }
