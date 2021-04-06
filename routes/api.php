@@ -33,3 +33,5 @@ Route::post('/insert_items',[App\Http\Controllers\SpinAndWin::class, 'InsertItem
 Route::get('/get_items',[App\Http\Controllers\SpinAndWin::class, 'getItems']);
 Route::post('/spin_wheel',[App\Http\Controllers\SpinAndWin::class, 'spinWheel']);
 Route::get('/get_prize',[App\Http\Controllers\SpinAndWin::class, 'getUserPrize']);
+Route::post('/store_prize',[App\Http\Controllers\SpinAndWin::class, 'storePrize']);
+
