@@ -31,3 +31,5 @@ Route::post('/create_token_spinnwin',[App\Http\Controllers\SpinAndWin::class, 'c
 Route::get('/get_site_records',[App\Http\Controllers\SpinAndWin::class, 'getSiteRecords']);
 Route::post('/insert_items',[App\Http\Controllers\SpinAndWin::class, 'InsertItems']);
 Route::get('/get_items',[App\Http\Controllers\SpinAndWin::class, 'getItems']);
+Route::post('/spin_wheel',[App\Http\Controllers\SpinAndWin::class, 'spinWheel']);
+Route::get('/get_prize',[App\Http\Controllers\SpinAndWin::class, 'getUserPrize']);

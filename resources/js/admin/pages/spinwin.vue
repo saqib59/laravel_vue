@@ -4,7 +4,7 @@
 			<div class="container-fluid">
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">Spin And Win  <Button @click="addModal=true"><Icon type="md-add" /> Add User</Button></p>
+					<p class="_title0">Spin And Win  <Button @click="addModal=true"><Icon type="md-add" /> Add Website</Button></p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -43,7 +43,7 @@
                         </div>
 				        <div slot="footer">
 				        	<Button type="default" @click="addModal=false">Close</Button>
-				        	<Button type="primary" @click="addSiteRecord" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add User'}}</Button>
+				        	<Button type="primary" @click="addSiteRecord" :disabled="isAdding" :loading="isAdding">{{isAdding ? 'Adding..' : 'Add Website'}}</Button>
 				        </div>
 				    </Modal>
 

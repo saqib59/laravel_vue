@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prize;
 use App\Models\Siteitem;
 use App\Models\Siterecord;
+use App\Models\Spincount;
 use Illuminate\Http\Request;
 
 class SpinAndWin extends Controller
@@ -62,4 +64,55 @@ class SpinAndWin extends Controller
             return $response;
         }
     }
+
+    /* spin wheel to count spins */
+    public function spinWheel(Request $request){
+    //     $request->validate([
+    //         'user_id' => 'required',
+    //         'token' => 'required',
+    //     ]
+    // );
+        $spin_count = Spincount::select('spin_count')->where('user_id', $request->user_id)->where('token', $request->token)->first();
+        if(empty($spin_count) ) {
+            return Spincount::create([
+                'user_id' => $request->user_id,
+                'token' => $request->token,
+                'spin_count' => "1",
+            ]);
+         }
+        else{
+            $count = $spin_count->spin_count;
+            return Spincount::where('user_id', $request->user_id)->where('token', $request->token)->update([
+                'spin_count' => ++$count,
+            ]);
+        }
+    }
+
+    /* save prize */
+    public function storePrize(Request $request){
+         try {
+            return Prize::create([
+                'user_id' => $request->user_id,
+                'prize' => $request->prize,
+                'token' => $request->token,
+            ]);
+        } catch (\Throwable $th) {
+            $response['error'] = "Oops! Something Went Wrong";
+            return $response;
+        }
+    }
+
+    /* save prize */
+    public function getUserPrize(Request $request){
+        try {
+            $prizes = Prize::select('prize')->where('user_id', $request->user_id)->where('token', $request->token)->get();
+            return $prizes;
+
+        } catch (\Throwable $th) {
+            $response['error'] = "No prize found for this user";
+            return $response;
+        }
+   }
+
+    
 }
