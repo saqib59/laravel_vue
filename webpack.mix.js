@@ -22,24 +22,30 @@ mix.styles([
     'public/css/all.css',
 );
 
+// mix.webpackConfig({
+//     output: {
+//         publicPath: '/Saqib/laravel/public/',
+//         chunkFilename: 'js/chunks/[name].[chunkhash].js'
+//     },
+// });
+// mix.setResourceRoot('./');
 
+if (mix.inProduction()) {
 
-// if (mix.inProduction()) {
-
-//     mix.webpackConfig({
-//         output: {
-//             publicPath: './intellectBay/public/',
-//             chunkFilename: 'js/chunks/[name].[chunkhash].js'
-//         },
-//     });
-//     mix.setResourceRoot('./');
-//     // mix.setPublicPath('intellectBay/public');
-// } else {
-//     mix.webpackConfig({
-//         output: {
-//             publicPath: './Saqib/laravel/public/',
-//             chunkFilename: 'js/chunks/[name].[chunkhash].js'
-//         },
-//     });
-//     mix.setResourceRoot('./');
-// }
+    mix.webpackConfig({
+        output: {
+            publicPath: '/spin_and_win/public/',
+            chunkFilename: 'js/chunks/[name].[chunkhash].js'
+        },
+    });
+    mix.setResourceRoot('./');
+    // mix.setPublicPath('intellectBay/public');
+} else {
+    mix.webpackConfig({
+        output: {
+            publicPath: '/Saqib/laravel/public/',
+            chunkFilename: 'js/chunks/[name].[chunkhash].js'
+        },
+    });
+    mix.setResourceRoot('./');
+}

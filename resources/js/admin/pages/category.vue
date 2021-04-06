@@ -58,7 +58,7 @@
 					        </div>
 					    </Upload>
 						 <div class="demo-upload-list" v-if="data.IconName">
-								<img :src="`/uploads/${data.IconName}`">
+								<img :src="`public/uploads/${data.IconName}`">
 								<div class="demo-upload-list-cover">
 									<Icon type="ios-eye-outline" @click.native="handleView(data.IconName)"></Icon>
 									<Icon type="ios-trash-outline" @click="handleRemove()"></Icon>

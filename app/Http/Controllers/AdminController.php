@@ -99,7 +99,7 @@ class AdminController extends Controller
             'file'   => 'required|mimes:jpeg,jpg,png',
         ]);
         $picName = time(). $request->file->extension();
-        $request->file->move(public_path('uploads'), $picName); 
+        $request->file->move(storage_path('uploads'), $picName); 
         return $picName;
     }
     public function deleteImage(Request $request){
@@ -110,7 +110,7 @@ class AdminController extends Controller
     }
     public function deleteFileFromServer($picName, $hasFullPath = false){
         if (!$hasFullPath) {
-            $picPath = public_path().'/uploads/'.$picName;
+            $picPath = storage_path().'/uploads/'.$picName;
         }
         if (file_exists($picPath)) {
             @unlink($picPath);

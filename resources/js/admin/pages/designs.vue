@@ -105,7 +105,7 @@
 					        </div>
 					    </Upload>
                          <div class="demo-upload-list" v-if="data.featuredImage">
-								<img :src="`/uploads/${data.featuredImage}`">
+								<img :src="`public/uploads/${data.featuredImage}`">
 								<div class="demo-upload-list-cover">
 									<Icon type="ios-trash-outline" @click="handleRemove()"></Icon>
 								</div>
