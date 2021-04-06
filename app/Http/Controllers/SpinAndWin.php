@@ -57,6 +57,8 @@ class SpinAndWin extends Controller
         try {
             $items = Siteitem::where('token', $request->token)->first();
             $items = json_decode($items->items);
+            $items = array_column($items, 'prize');
+            $items['token'] = $request->token;
             return $items;
 
         } catch (\Throwable $th) {
