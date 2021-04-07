@@ -21,7 +21,7 @@
 							<tr v-for="(category , i ) in categories" :key="i">
 								<td>{{category.id}}</td>
 								<td class="table_image">
-									<img :src="`uploads/${category.IconName}`" />
+									<img :src="`public/storage/uploads/${category.IconName}`" />
 								</td>
 								<td class="_table_name">{{category.categoryName}}</td>
 								<td>{{category.created_at}}</td>
